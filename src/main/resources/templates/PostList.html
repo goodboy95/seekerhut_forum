@@ -1,0 +1,15 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <div th:replace="common/ForumLayout :: head"></div>
+    <body>
+        <script src="~/js/forum/postlist.js"></script>
+        <div th:replace="common/ForumLayout :: header"></div>
+        <div id="postList">
+        </div>
+        <div id="writePost">
+            <div id="token"></div>
+            <input type="text" id="title" />
+            <input type="textarea" id="content" />
+            <button id="submit">提交</button>
+        </div>
+    </body>
+</html>
