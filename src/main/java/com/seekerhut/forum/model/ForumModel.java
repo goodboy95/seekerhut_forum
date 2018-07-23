@@ -4,39 +4,73 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
-public class ForumModel implements Serializable {
+public class ForumModel extends BaseModel implements Serializable {
     @Id //@id注意选择这个javax.persistence
     @GeneratedValue
-    private  Integer  id;
-    private  String   cupSize;
-    private  Integer   age;
+    private  String   name;
+    private  Integer   creatorID;
+    private Integer viewLevel;
+    private Integer postLevel;
+    private String admin;
+    private int status;
+    //private List<Long> replyId;
 
-    public ForumModel() {
+    public String getName() {
+        return name;
     }
 
-    public Integer getId() {
-        return id;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Integer getCreatorID() {
+        return creatorID;
     }
 
-    public String getCupSize() {
-        return cupSize;
+    public void setCreatorID(Integer name) {
+        this.creatorID = creatorID;
     }
 
-    public void setCupSize(String cupSize) {
-        this.cupSize = cupSize;
+    public Integer getViewLevel() {
+        return viewLevel;
     }
 
-    public Integer getAge() {
-        return age;
+    public void setViewLevel(Integer viewLevel) {
+        this.viewLevel = viewLevel;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public Integer getPostLevel() {
+        return postLevel;
     }
+
+    public void setPostLevel(Integer postLevel) {
+        this.postLevel = postLevel;
+    }
+
+    public String getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(String admin) {
+        this.admin = admin;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+/*    public List<Long> getReplyId() {
+        return replyId;
+    }
+
+    public void setReplyId(List<Long> replyId) {
+        this.replyId = replyId;
+    }*/
 }
