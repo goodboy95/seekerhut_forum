@@ -15,7 +15,7 @@ public class IndexApiController {
     private ForumMap forum;
     @RequestMapping(value = "/forumList", method = RequestMethod.GET)
     public @ResponseBody String GetForumList() {
-
+        var x = forum.count();
         return "frfrfrfr";
     }
 }

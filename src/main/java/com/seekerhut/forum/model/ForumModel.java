@@ -4,19 +4,47 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @Entity
-public class ForumModel extends BaseModel implements Serializable {
+public class ForumModel implements Serializable {
     @Id //@id注意选择这个javax.persistence
     @GeneratedValue
+    private Long id;
+    private Date createTime;
+    private Boolean isDeleted;
     private  String   name;
     private  Integer   creatorID;
     private Integer viewLevel;
     private Integer postLevel;
-    private String admin;
+    private String adminName;
     private int status;
-    //private List<Long> replyId;
+    private List<Long> replyId;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
 
     public String getName() {
         return name;
@@ -30,7 +58,7 @@ public class ForumModel extends BaseModel implements Serializable {
         return creatorID;
     }
 
-    public void setCreatorID(Integer name) {
+    public void setCreatorID(Integer creatorID) {
         this.creatorID = creatorID;
     }
 
@@ -50,12 +78,12 @@ public class ForumModel extends BaseModel implements Serializable {
         this.postLevel = postLevel;
     }
 
-    public String getAdmin() {
-        return admin;
+    public String getAdminName() {
+        return adminName;
     }
 
-    public void setAdmin(String admin) {
-        this.admin = admin;
+    public void setAdminName(String adminName) {
+        this.adminName = adminName;
     }
 
     public int getStatus() {
@@ -66,11 +94,11 @@ public class ForumModel extends BaseModel implements Serializable {
         this.status = status;
     }
 
-/*    public List<Long> getReplyId() {
+    public List<Long> getReplyId() {
         return replyId;
     }
 
     public void setReplyId(List<Long> replyId) {
         this.replyId = replyId;
-    }*/
+    }
 }
