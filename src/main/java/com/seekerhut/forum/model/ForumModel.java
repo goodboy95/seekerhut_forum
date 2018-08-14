@@ -1,13 +1,16 @@
 package com.seekerhut.forum.model;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
+@Table(name = "forum")
+//@TypeDef(name = "json", typeClass = )
 public class ForumModel implements Serializable {
     @Id //@id注意选择这个javax.persistence
     @GeneratedValue
@@ -20,7 +23,9 @@ public class ForumModel implements Serializable {
     private Integer postLevel;
     private String adminName;
     private int status;
-    private List<Long> replyId;
+    @Type(type = "json")
+    @Column(columnDefinition = "json")
+    private LinkedList<Long> replyId;
 
     public Long getId() {
         return id;
@@ -94,11 +99,11 @@ public class ForumModel implements Serializable {
         this.status = status;
     }
 
-    public List<Long> getReplyId() {
+    public LinkedList<Long> getReplyId() {
         return replyId;
     }
 
-    public void setReplyId(List<Long> replyId) {
+    public void setReplyId(LinkedList<Long> replyId) {
         this.replyId = replyId;
     }
 }
