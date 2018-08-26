@@ -9,23 +9,33 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Entity
-@Table(name = "forum")
+@Table(name = "forum", indexes = {
+        @Index(name = "idx_name", columnList = "name", unique = true)
+})
 //@TypeDef(name = "json", typeClass = )
 public class ForumModel implements Serializable {
     @Id //@id注意选择这个javax.persistence
     @GeneratedValue
     private Long id;
+    @Column(nullable = false)
     private Date createTime;
+    @Column(nullable = false)
     private Boolean isDeleted;
+    @Column(nullable = false)
     private  String   name;
-    private  Integer   creatorID;
+    private  Long   creatorID;
     private Integer viewLevel;
     private Integer postLevel;
-    private String adminName;
-    private int status;
-    @Type(type = "json")
-    @Column(columnDefinition = "json")
-    private LinkedList<Long> replyId;
+    private Integer status;
+    @Column(name = "admin_id", columnDefinition = "json")
+    private LinkedList<Long> adminId;
+    @Column(name = "admin_name", columnDefinition = "json")
+    private LinkedList<String> adminName;
+
+    public ForumModel() {
+        createTime = new Date();
+        isDeleted = false;
+    }
 
     public Long getId() {
         return id;
@@ -59,11 +69,11 @@ public class ForumModel implements Serializable {
         this.name = name;
     }
 
-    public Integer getCreatorID() {
+    public Long getCreatorID() {
         return creatorID;
     }
 
-    public void setCreatorID(Integer creatorID) {
+    public void setCreatorID(Long creatorID) {
         this.creatorID = creatorID;
     }
 
@@ -71,7 +81,7 @@ public class ForumModel implements Serializable {
         return viewLevel;
     }
 
-    public void setViewLevel(Integer viewLevel) {
+    public void setViewLevel(int viewLevel) {
         this.viewLevel = viewLevel;
     }
 
@@ -79,19 +89,11 @@ public class ForumModel implements Serializable {
         return postLevel;
     }
 
-    public void setPostLevel(Integer postLevel) {
+    public void setPostLevel(int postLevel) {
         this.postLevel = postLevel;
     }
 
-    public String getAdminName() {
-        return adminName;
-    }
-
-    public void setAdminName(String adminName) {
-        this.adminName = adminName;
-    }
-
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
@@ -99,11 +101,19 @@ public class ForumModel implements Serializable {
         this.status = status;
     }
 
-    public LinkedList<Long> getReplyId() {
-        return replyId;
+    public LinkedList<Long> getAdminId() {
+        return adminId;
     }
 
-    public void setReplyId(LinkedList<Long> replyId) {
-        this.replyId = replyId;
+    public void setAdminId(LinkedList<Long> adminId) {
+        this.adminId = adminId;
+    }
+
+    public LinkedList<String> getAdminName() {
+        return adminName;
+    }
+
+    public void setAdminName(LinkedList<String> adminName) {
+        this.adminName = adminName;
     }
 }

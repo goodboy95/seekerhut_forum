@@ -1,49 +1,52 @@
 package com.seekerhut.forum.controller;
 
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.seekerhut.forum.map.ForumMap;
 import com.seekerhut.forum.model.ForumModel;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 @Controller
 @RequestMapping("/api/forum")
-public class IndexApiController {
+public class IndexApiController extends BaseController {
     @Autowired
     private ForumMap forum;
     @RequestMapping(value = "/forumList", method = RequestMethod.GET)
+    @ApiOperation(value = "获取论坛列表", httpMethod = "GET", notes = "")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "name", value = "论坛名", paramType = "query", dataType = "String")
+    })
     public @ResponseBody String GetForumList() {
-        var z = new ForumModel();
-        z.setAdminName("");
-        z.setCreatorID(1);
-        z.setName("ccc");
-        z.setPostLevel(1);
-        z.setStatus(1);
-        z.setViewLevel(1);
-        var l = new LinkedList<Long>();
-        l.add((long)11);
-        l.add((long)22);
-        z.setReplyId(l);
-        forum.save(z);
-        var x = forum.count();
-        return Long.toString(x);
-    }
-
-    @RequestMapping(value = "/forumGet", method = RequestMethod.GET)
-    public @ResponseBody String GetSubList(String nm) {
-        var z = forum.findSomeByName("ccc", 2);
-        var zi = z.iterator();
-        var m = zi.next();
-        return m.getName();
+        List<ForumModel> forumList = forum.findAll();
+        return Success(forumList);
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public @ResponseBody String SaveForum() {
-        return "";
+    public @ResponseBody String SaveForum(String forumJson) {
+        JSONObject forumJobj = new JSONObject(forumJson);
+        ForumModel entity = (forumJobj.has("id")) ? forum.getOne(forumJobj.getLong("id")) : new ForumModel();
+        if (forumJobj.has("name")) { entity.setName(forumJobj.getString("name")); }
+        if (forumJobj.has("creatorID")) { entity.setCreatorID(forumJobj.getLong("creatorID")); }
+        if (forumJobj.has("postLevel")) { entity.setPostLevel(forumJobj.getInt("postLevel")); }
+        if (forumJobj.has("viewLevel")) { entity.setViewLevel(forumJobj.getInt("viewLevel")); }
+        if (forumJobj.has("status")) { entity.setStatus(forumJobj.getInt("status")); }
+        forum.save(entity);
+        return Success("save ok", entity);
     }
 }
