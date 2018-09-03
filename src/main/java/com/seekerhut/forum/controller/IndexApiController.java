@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.seekerhut.forum.map.ForumMap;
+import com.seekerhut.forum.map.PostMap;
 import com.seekerhut.forum.model.ForumModel;
+import com.seekerhut.forum.model.PostModel;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +29,8 @@ import java.util.List;
 public class IndexApiController extends BaseController {
     @Autowired
     private ForumMap forum;
+    private PostMap post;
+
     @RequestMapping(value = "/forumList", method = RequestMethod.GET)
     @ApiOperation(value = "获取论坛列表", httpMethod = "GET", notes = "")
     @ApiImplicitParams({
@@ -37,16 +41,19 @@ public class IndexApiController extends BaseController {
         return Success(forumList);
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/forum", method = RequestMethod.POST)
     public @ResponseBody String SaveForum(String forumJson) {
         JSONObject forumJobj = new JSONObject(forumJson);
         ForumModel entity = (forumJobj.has("id")) ? forum.getOne(forumJobj.getLong("id")) : new ForumModel();
-        if (forumJobj.has("name")) { entity.setName(forumJobj.getString("name")); }
-        if (forumJobj.has("creatorID")) { entity.setCreatorID(forumJobj.getLong("creatorID")); }
-        if (forumJobj.has("postLevel")) { entity.setPostLevel(forumJobj.getInt("postLevel")); }
-        if (forumJobj.has("viewLevel")) { entity.setViewLevel(forumJobj.getInt("viewLevel")); }
-        if (forumJobj.has("status")) { entity.setStatus(forumJobj.getInt("status")); }
+        entity.setValue(forumJobj);
         forum.save(entity);
         return Success("save ok", entity);
     }
+
+    @RequestMapping(value = "/postList", method = RequestMethod.GET)
+    public @ResponseBody String PostList(Long forumId, int pageSize, int pageNum) {
+        List<PostModel> res = post.getPosts(forumId,pageSize * pageNum, pageSize);
+        return Success(res);
+    }
+
 }
