@@ -44,10 +44,19 @@ public class IndexApiController extends BaseController {
     @RequestMapping(value = "/forum", method = RequestMethod.POST)
     public @ResponseBody String SaveForum(String forumJson) {
         JSONObject forumJobj = new JSONObject(forumJson);
-        ForumModel entity = (forumJobj.has("id")) ? forum.getOne(forumJobj.getLong("id")) : new ForumModel();
-        entity.setValue(forumJobj);
-        forum.save(entity);
-        return Success("save ok", entity);
+        ForumModel forumObj = forumJobj.has("id") ? forum.getOne(forumJobj.getLong("id")) : new ForumModel();
+        forumObj.setValue(forumJobj);
+        forum.save(forumObj);
+        return Success("save ok", forumObj);
+    }
+
+    @RequestMapping(value = "/post", method = RequestMethod.POST)
+    public @ResponseBody String SavePost(String postJson) {
+        JSONObject postJobj = new JSONObject(postJson);
+        PostModel postObj = postJobj.has("id") ? post.getOne(postJobj.getLong("id")) : new PostModel();
+        postObj.setValue(postJobj);
+        post.save(postObj);
+        return Success("save ok", postObj);
     }
 
     @RequestMapping(value = "/postList", method = RequestMethod.GET)
