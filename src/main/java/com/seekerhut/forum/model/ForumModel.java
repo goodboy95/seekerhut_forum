@@ -24,7 +24,7 @@ public class ForumModel implements Serializable {
     @Column(nullable = false)
     private  String   name;
     @Column(nullable = false)
-    private  Long   creatorID;
+    private  Long   creatorId;
     @Column(nullable = false)
     private Integer viewLevel;
     @Column(nullable = false)
@@ -47,7 +47,7 @@ public class ForumModel implements Serializable {
     public ForumModel setValue(JSONObject init) {
         if (init.has("id")) { this.id = init.getLong("id"); }
         if (init.has("name")) { this.name = init.getString("name"); }
-        if (init.has("creatorID")) { this.creatorID = init.getLong("creatorID"); }
+        if (init.has("creatorId")) { this.creatorId = init.getLong("creatorId"); }
         if (init.has("postLevel")) { this.postLevel = init.getInt("postLevel"); }
         if (init.has("viewLevel")) { this.viewLevel = init.getInt("viewLevel"); }
         if (init.has("status")) { this.status = init.getInt("status"); }
@@ -90,12 +90,12 @@ public class ForumModel implements Serializable {
         return this;
     }
 
-    public Long getCreatorID() {
-        return creatorID;
+    public Long getCreatorId() {
+        return creatorId;
     }
 
-    public ForumModel setCreatorID(Long creatorID) {
-        this.creatorID = creatorID;
+    public ForumModel setCreatorId(Long creatorId) {
+        this.creatorId = creatorId;
         return this;
     }
 

@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/api/forum")
@@ -32,16 +34,17 @@ public class IndexApiController extends BaseController {
     private PostMap post;
 
     @RequestMapping(value = "/forumList", method = RequestMethod.GET)
-    @ApiOperation(value = "获取论坛列表", httpMethod = "GET", notes = "")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "name", value = "论坛名", paramType = "query", dataType = "String")
-    })
+    @ApiOperation(value = "Get forum list", httpMethod = "GET", notes = "")
     public @ResponseBody String GetForumList() {
-        List<ForumModel> forumList = forum.findAll();
+        var forumList = forum.findAll();
         return Success(forumList);
     }
 
     @RequestMapping(value = "/forum", method = RequestMethod.POST)
+    @ApiOperation(value = "Add or edit a forum", httpMethod = "POST", notes = "")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "forumJson", value = "fourmInfo in json string", paramType = "query", dataType = "String")
+    })
     public @ResponseBody String SaveForum(String forumJson) {
         JSONObject forumJobj = new JSONObject(forumJson);
         ForumModel forumObj = forumJobj.has("id") ? forum.getOne(forumJobj.getLong("id")) : new ForumModel();
