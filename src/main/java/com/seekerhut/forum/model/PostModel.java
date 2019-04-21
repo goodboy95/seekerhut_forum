@@ -1,5 +1,6 @@
 package com.seekerhut.forum.model;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.persistence.*;
@@ -41,15 +42,19 @@ public class PostModel implements Serializable {
     }
 
     public PostModel setValue(JSONObject init) {
-        if (init.has("id")) { this.id = init.getLong("id"); }
-        if (init.has("title")) { this.title = init.getString("title"); }
-        if (init.has("forumId")) { this.forumId = init.getLong("forumId"); }
-        if (init.has("authorId")) { this.authorId = init.getLong("authorId"); }
-        if (init.has("content")) { this.content = init.getString("content"); }
-        if (init.has("replyLevel")) { this.replyLevel = init.getInt("replyLevel"); }
-        if (init.has("viewLevel")) { this.viewLevel = init.getInt("viewLevel"); }
-        if (init.has("status")) { this.status = init.getInt("status"); }
-        return this;
+        try
+        {
+            if (init.has("id")) { this.id = init.getLong("id"); }
+            if (init.has("title")) { this.title = init.getString("title"); }
+            if (init.has("forumId")) { this.forumId = init.getLong("forumId"); }
+            if (init.has("authorId")) { this.authorId = init.getLong("authorId"); }
+            if (init.has("content")) { this.content = init.getString("content"); }
+            if (init.has("replyLevel")) { this.replyLevel = init.getInt("replyLevel"); }
+            if (init.has("viewLevel")) { this.viewLevel = init.getInt("viewLevel"); }
+            if (init.has("status")) { this.status = init.getInt("status"); }
+            return this;
+        }
+        catch (JSONException je) { return null; }
     }
 
     public Long getId() {
