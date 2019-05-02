@@ -44,30 +44,143 @@ public class ForumModel implements Serializable {
         status = 0;
     }
 
-    public ForumModel setValue(JSONObject init) {
-        try {
-            if (init.has("id")) {
-                this.id = init.getLong("id");
-            }
-            if (init.has("name")) {
-                this.name = init.getString("name");
-            }
-            if (init.has("creatorId")) {
-                this.creatorId = init.getLong("creatorId");
-            }
-            if (init.has("postLevel")) {
-                this.postLevel = init.getInt("postLevel");
-            }
-            if (init.has("viewLevel")) {
-                this.viewLevel = init.getInt("viewLevel");
-            }
-            if (init.has("status")) {
-                this.status = init.getInt("status");
-            }
-            return this;
-        }
-        catch (Exception e) {
-            return null;
-        }
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the createTime
+     */
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    /**
+     * @param createTime the createTime to set
+     */
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    /**
+     * @return the isDeleted
+     */
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    /**
+     * @param isDeleted the isDeleted to set
+     */
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return the creatorId
+     */
+    public Long getCreatorId() {
+        return creatorId;
+    }
+
+    /**
+     * @param creatorId the creatorId to set
+     */
+    public void setCreatorId(Long creatorId) {
+        this.creatorId = creatorId;
+    }
+
+    /**
+     * @return the viewLevel
+     */
+    public Integer getViewLevel() {
+        return viewLevel;
+    }
+
+    /**
+     * @param viewLevel the viewLevel to set
+     */
+    public void setViewLevel(Integer viewLevel) {
+        this.viewLevel = viewLevel;
+    }
+
+    /**
+     * @return the postLevel
+     */
+    public Integer getPostLevel() {
+        return postLevel;
+    }
+
+    /**
+     * @param postLevel the postLevel to set
+     */
+    public void setPostLevel(Integer postLevel) {
+        this.postLevel = postLevel;
+    }
+
+    /**
+     * @return the status
+     */
+    public Integer getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    /**
+     * @return the adminId
+     */
+    public LinkedList<Long> getAdminId() {
+        return adminId;
+    }
+
+    /**
+     * @param adminId the adminId to set
+     */
+    public void setAdminId(LinkedList<Long> adminId) {
+        this.adminId = adminId;
+    }
+
+    /**
+     * @return the adminName
+     */
+    public LinkedList<String> getAdminName() {
+        return adminName;
+    }
+
+    /**
+     * @param adminName the adminName to set
+     */
+    public void setAdminName(LinkedList<String> adminName) {
+        this.adminName = adminName;
     }
 }

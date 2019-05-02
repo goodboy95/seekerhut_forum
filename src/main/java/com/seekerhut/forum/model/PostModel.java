@@ -15,7 +15,7 @@ public class PostModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private Date datetime;
+    private Date createTime;
     @Column(nullable = false)
     private Boolean isDeleted;
     @Column(nullable = false)
@@ -34,7 +34,7 @@ public class PostModel implements Serializable {
     private int status;
 
     public PostModel() {
-        datetime = new Date();
+        createTime = new Date();
         isDeleted = false;
         viewLevel = 0;
         replyLevel = 0;
@@ -66,12 +66,12 @@ public class PostModel implements Serializable {
         return this;
     }
 
-    public Date getDatetime() {
-        return datetime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public PostModel setDatetime(Date datetime) {
-        this.datetime = datetime;
+    public PostModel setCreatetime(Date createTime) {
+        this.createTime = createTime;
         return this;
     }
 

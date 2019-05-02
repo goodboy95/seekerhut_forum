@@ -1,5 +1,6 @@
 package com.seekerhut.forum.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -11,12 +12,17 @@ import com.seekerhut.forum.model.PostModel;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import springfox.documentation.spring.web.json.Json;
+
+import org.apache.el.stream.Stream;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonObjectDeserializer;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +36,7 @@ import java.util.stream.Collectors;
 public class IndexApiController extends BaseController {
     @Autowired
     private ForumMap forum;
+    @Autowired
     private PostMap post;
 
     @RequestMapping(value = "/forumList", method = RequestMethod.GET)
@@ -44,27 +51,25 @@ public class IndexApiController extends BaseController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "forumJson", value = "fourmInfo in json string", paramType = "query", dataType = "String")
     })
-    public @ResponseBody String SaveForum(String forumJson) {
+    public @ResponseBody String SaveForum(@RequestBody String forumJson) {
         try {
-            JSONObject forumJobj = new JSONObject(forumJson);
-            ForumModel forumObj = forumJobj.has("id") ? forum.getOne(forumJobj.getLong("id")) : new ForumModel();
-            forumObj.setValue(forumJobj);
+            var forumObj = JSON.parseObject(forumJson, ForumModel.class);
             forum.save(forumObj);
             return Success("save ok", forumObj);
         }
-        catch (JSONException je) { return Fail(-1, "oh no"); }
+        catch (Exception e) { return Fail(-1, "oh no"); }
     }
 
     @RequestMapping(value = "/post", method = RequestMethod.POST)
-    public @ResponseBody String SavePost(String postJson) {
+    public @ResponseBody String SavePost(@RequestBody String postJson) {
         try {
-            JSONObject postJobj = new JSONObject(postJson);
-            PostModel postObj = postJobj.has("id") ? post.getOne(postJobj.getLong("id")) : new PostModel();
-            postObj.setValue(postJobj);
+            var postObj = JSON.parseObject(postJson, PostModel.class);
             post.save(postObj);
             return Success("save ok", postObj);
         }
-        catch (JSONException je) { return Fail(-1, "oh no"); }
+        catch (Exception e) { 
+            return Fail(-1, String.join(",", Arrays.stream(e.getStackTrace()).map(s -> s.toString()).toArray(String[] :: new))); 
+        }
     }
 
     @RequestMapping(value = "/postList", method = RequestMethod.GET)
@@ -73,6 +78,7 @@ public class IndexApiController extends BaseController {
         return Success(res);
     }
 
+    @RequestMapping(value = "/replyList", method = RequestMethod.GET)
     public @ResponseBody String ReplyList(Long postId, int pageSize, int pageNum) {
         return "";
     }
