@@ -1,78 +1,28 @@
 package com.seekerhut.forum.model;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
-@Entity
-@Table(name = "post", indexes = {
-})
-public class PostModel implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(nullable = false)
-    private Date createTime;
-    @Column(nullable = false)
-    private Boolean isDeleted;
-    @Column(nullable = false)
-    private Long forumId;
-    @Column(nullable = false)
+public class PostModel extends ModelBase implements Serializable {
+    private int forumId;
     private String title;
-    @Column(nullable = false)
     private Long authorId;
-    @Column(nullable = false)
     private int viewLevel;
-    @Column(nullable = false)
     private int replyLevel;
-    @Column(nullable = false)
     private String content;
-    @Column(nullable = false)
     private int status;
 
     public PostModel() {
-        createTime = new Date();
-        isDeleted = false;
+        super();
         viewLevel = 0;
         replyLevel = 0;
         status = 0;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public PostModel setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public PostModel setCreatetime(Date createTime) {
-        this.createTime = createTime;
-        return this;
-    }
-
-    public Boolean getDeleted() {
-        return isDeleted;
-    }
-
-    public PostModel setDeleted(Boolean deleted) {
-        isDeleted = deleted;
-        return this;
-    }
-
-    public Long getForumId() {
+    public int getForumId() {
         return forumId;
     }
 
-    public PostModel setForumId(Long forumId) {
+    public PostModel setForumId(int forumId) {
         this.forumId = forumId;
         return this;
     }

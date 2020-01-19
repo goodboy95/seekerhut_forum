@@ -1,4 +1,5 @@
 {
+    "java.configuration.updateBuildConfiguration": "interactive",
     "files.exclude": {
         "**/.classpath": true,
         "**/.project": true,

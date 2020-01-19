@@ -1,78 +1,16 @@
 package com.seekerhut.forum.model;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
-@Entity
-@Table(name = "reply", indexes = {
-})
-public class ReplyModel implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(nullable = false)
-    private Date datetime;
-    @Column(nullable = false)
-    private Boolean isDeleted;
-    @Column(nullable = false)
+public class ReplyModel extends ModelBase implements Serializable {
     private Long postId;
-    @Column(nullable = false)
     private Long authorId;
-    @Column(nullable = false)
     private int viewLevel;
-    @Column(nullable = false)
     private String content;
 
     public ReplyModel() {
-        datetime = new Date();
-        isDeleted = false;
+        super();
         viewLevel = 0;
-    }
-    
-    /**
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
-     * @return the datetime
-     */
-    public Date getDatetime() {
-        return datetime;
-    }
-
-    /**
-     * @param datetime the datetime to set
-     */
-    public void setDatetime(Date datetime) {
-        this.datetime = datetime;
-    }
-
-    /**
-     * @return the isDeleted
-     */
-    public Boolean getIsDeleted() {
-        return isDeleted;
-    }
-
-    /**
-     * @param isDeleted the isDeleted to set
-     */
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
     }
 
     /**

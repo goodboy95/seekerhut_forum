@@ -1,89 +1,22 @@
 package com.seekerhut.forum.model;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
-import org.json.JSONObject;
 
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
-@Entity
-@Table(name = "forum", indexes = {
-        @Index(name = "idx_name", columnList = "name", unique = true)
-})
-public class ForumModel implements Serializable {
-    @Id //@id注意选择这个javax.persistence
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(nullable = false)
-    private Date createTime;
-    @Column(nullable = false)
-    private Boolean isDeleted;
-    @Column(nullable = false)
-    private  String   name;
-    @Column(nullable = false)
-    private  Long   creatorId;
-    @Column(nullable = false)
-    private Integer viewLevel;
-    @Column(nullable = false)
-    private Integer postLevel;
-    @Column(nullable = false)
-    private Integer status;
-    @Column(name = "admin_id", columnDefinition = "json")
-    private LinkedList<Long> adminId;
-    @Column(name = "admin_name", columnDefinition = "json")
-    private LinkedList<String> adminName;
+public class ForumModel extends ModelBase implements Serializable {
+    private String name;
+    private Long creatorId;
+    private int viewLevel;
+    private int postLevel;
+    private int status;
+    private String adminId;
+    private String adminName;
 
     public ForumModel() {
-        createTime = new Date();
-        isDeleted = false;
+        super();
         viewLevel = 0;
         postLevel = 0;
         status = 0;
-    }
 
-    /**
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
-     * @return the createTime
-     */
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    /**
-     * @param createTime the createTime to set
-     */
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    /**
-     * @return the isDeleted
-     */
-    public Boolean getIsDeleted() {
-        return isDeleted;
-    }
-
-    /**
-     * @param isDeleted the isDeleted to set
-     */
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
     }
 
     /**
@@ -159,28 +92,34 @@ public class ForumModel implements Serializable {
     /**
      * @return the adminId
      */
-    public LinkedList<Long> getAdminId() {
+    @SuppressWarnings("unchecked")
+    public String getAdminId() {
+        //return JSONObject.parseObject(adminId, LinkedList.class);
         return adminId;
     }
 
     /**
      * @param adminId the adminId to set
      */
-    public void setAdminId(LinkedList<Long> adminId) {
+    public void setAdminId(String adminId) {
+        //this.adminId = JSONObject.toJSONString(adminId);
         this.adminId = adminId;
     }
 
     /**
      * @return the adminName
      */
-    public LinkedList<String> getAdminName() {
+    @SuppressWarnings("unchecked")
+    public String getAdminName() {
+        //return JSONObject.parseObject(adminName, LinkedList.class);
         return adminName;
     }
 
     /**
      * @param adminName the adminName to set
      */
-    public void setAdminName(LinkedList<String> adminName) {
+    public void setAdminName(String adminName) {
+        //this.adminName = JSONObject.toJSONString(adminName);
         this.adminName = adminName;
     }
 }
