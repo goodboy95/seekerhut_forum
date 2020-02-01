@@ -60,13 +60,6 @@ public class ForumSection extends ModelBase implements Serializable {
         this.status = status;
     }
 
-    public ForumSection() {
-        super();
-        viewLevel = 0;
-        postLevel = 0;
-        status = 0;
-    }
-
     @Override
     public boolean equals(Object that) {
         if (this == that) {

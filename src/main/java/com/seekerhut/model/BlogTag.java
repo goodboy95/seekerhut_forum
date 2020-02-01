@@ -7,42 +7,12 @@ import java.util.Date;
  * blog_tag
  * @author 
  */
-public class BlogTag implements Serializable {
-    private Long id;
-
-    private Date createTime;
-
-    private Boolean isDeleted;
-
+public class BlogTag extends ModelBase implements Serializable {
     private Long userId;
 
     private String tagName;
 
     private static final long serialVersionUID = 1L;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Boolean getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
-    }
 
     public Long getUserId() {
         return userId;

@@ -24,6 +24,9 @@ public class ForumCommonService {
         if (section.getId() != null) {
             sectionMapper.updateByPrimaryKey(section);
         } else {
+            section.setViewLevel((byte)0);
+            section.setPostLevel((byte)0);
+            section.setStatus((byte)0);
             sectionMapper.insert(section);
         }
         return true;
@@ -41,6 +44,9 @@ public class ForumCommonService {
         if (post.getId() != null) {
             postMapper.updateByPrimaryKeySelective(post);
         } else {
+            post.setViewLevel((byte)0);
+            post.setReplyLevel((byte)0);
+            post.setStatus((byte)0);
             postMapper.insert(post);
         }
         return true;
@@ -54,6 +60,7 @@ public class ForumCommonService {
         if (reply.getId() != null) {
             replyMapper.updateByPrimaryKey(reply);
         } else {
+            reply.setViewLevel((byte)0);
             replyMapper.insert(reply);
         }
         return true;

@@ -50,11 +50,6 @@ public class ForumReply extends ModelBase implements Serializable {
         this.content = content;
     }
 
-    public ForumReply() {
-        super();
-        viewLevel = 0;
-    }
-
     @Override
     public boolean equals(Object that) {
         if (this == that) {

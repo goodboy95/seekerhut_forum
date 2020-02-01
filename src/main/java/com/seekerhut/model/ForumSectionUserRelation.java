@@ -6,9 +6,7 @@ import java.io.Serializable;
  * forum_section_user_relation
  * @author 
  */
-public class ForumSectionUserRelation implements Serializable {
-    private Integer id;
-
+public class ForumSectionUserRelation extends ModelBase implements Serializable {
     private Integer sectionId;
 
     private Integer userId;
@@ -18,14 +16,6 @@ public class ForumSectionUserRelation implements Serializable {
     private Byte userStatus;
 
     private static final long serialVersionUID = 1L;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Integer getSectionId() {
         return sectionId;

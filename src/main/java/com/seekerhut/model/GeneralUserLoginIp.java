@@ -7,26 +7,12 @@ import java.util.Date;
  * general_user_login_ip
  * @author 
  */
-public class GeneralUserLoginIp implements Serializable {
-    private Integer id;
-
+public class GeneralUserLoginIp extends ModelBase implements Serializable {
     private Integer userId;
 
     private String loginIp;
 
-    private Date createTime;
-
-    private Boolean isDeleted;
-
     private static final long serialVersionUID = 1L;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Integer getUserId() {
         return userId;
@@ -42,22 +28,6 @@ public class GeneralUserLoginIp implements Serializable {
 
     public void setLoginIp(String loginIp) {
         this.loginIp = loginIp;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Boolean getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
     }
 
     @Override

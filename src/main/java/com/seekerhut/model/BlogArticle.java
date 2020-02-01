@@ -7,13 +7,7 @@ import java.util.Date;
  * blog_article
  * @author 
  */
-public class BlogArticle implements Serializable {
-    private Long id;
-
-    private Date createTime;
-
-    private Boolean isDeleted;
-
+public class BlogArticle extends ModelBase implements Serializable {
     private Long authorId;
 
     private Integer privacy;
@@ -21,30 +15,6 @@ public class BlogArticle implements Serializable {
     private Integer likeNum;
 
     private static final long serialVersionUID = 1L;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Boolean getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
-    }
 
     public Long getAuthorId() {
         return authorId;

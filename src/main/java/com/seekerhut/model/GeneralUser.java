@@ -7,13 +7,7 @@ import java.util.Date;
  * general_user
  * @author 
  */
-public class GeneralUser implements Serializable {
-    private Long id;
-
-    private Date createTime;
-
-    private Boolean isDeleted;
-
+public class GeneralUser extends ModelBase implements Serializable {
     private String name;
 
     private String pass;
@@ -35,30 +29,6 @@ public class GeneralUser implements Serializable {
     private Integer gold;
 
     private static final long serialVersionUID = 1L;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Boolean getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
-    }
 
     public String getName() {
         return name;

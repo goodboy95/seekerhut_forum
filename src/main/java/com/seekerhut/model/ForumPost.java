@@ -80,13 +80,6 @@ public class ForumPost extends ModelBase implements Serializable {
         this.content = content;
     }
 
-    public ForumPost() {
-        super();
-        viewLevel = 0;
-        replyLevel = 0;
-        status = 0;
-    }
-
     @Override
     public boolean equals(Object that) {
         if (this == that) {
