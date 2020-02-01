@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seekerhut.mapper.BlogArticleDAO">
+  <resultMap id="BaseResultMap" type="com.seekerhut.model.BlogArticle">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+    <result column="author_id" jdbcType="BIGINT" property="authorId" />
+    <result column="privacy" jdbcType="INTEGER" property="privacy" />
+    <result column="like_num" jdbcType="INTEGER" property="likeNum" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.seekerhut.model.BlogArticleWithBLOBs">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    <result column="title" jdbcType="LONGVARCHAR" property="title" />
+    <result column="like_id" jdbcType="LONGVARCHAR" property="likeId" />
+    <result column="dislike_id" jdbcType="LONGVARCHAR" property="dislikeId" />
+    <result column="award_gold_info" jdbcType="LONGVARCHAR" property="awardGoldInfo" />
+    <result column="visible_userid" jdbcType="LONGVARCHAR" property="visibleUserid" />
+    <result column="attachments" jdbcType="LONGVARCHAR" property="attachments" />
+    <result column="tags" jdbcType="LONGVARCHAR" property="tags" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_time, is_deleted, author_id, privacy, like_num
+  </sql>
+  <sql id="Blob_Column_List">
+    content, title, like_id, dislike_id, award_gold_info, visible_userid, attachments, 
+    tags
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog_article
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from blog_article
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.seekerhut.model.BlogArticleWithBLOBs" useGeneratedKeys="true">
+    insert into blog_article (create_time, is_deleted, author_id, 
+      privacy, like_num, content, 
+      title, like_id, dislike_id, 
+      award_gold_info, visible_userid, attachments, 
+      tags)
+    values (#{createTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT}, #{authorId,jdbcType=BIGINT}, 
+      #{privacy,jdbcType=INTEGER}, #{likeNum,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}, 
+      #{title,jdbcType=LONGVARCHAR}, #{likeId,jdbcType=LONGVARCHAR}, #{dislikeId,jdbcType=LONGVARCHAR}, 
+      #{awardGoldInfo,jdbcType=LONGVARCHAR}, #{visibleUserid,jdbcType=LONGVARCHAR}, #{attachments,jdbcType=LONGVARCHAR}, 
+      #{tags,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.seekerhut.model.BlogArticleWithBLOBs" useGeneratedKeys="true">
+    insert into blog_article
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="authorId != null">
+        author_id,
+      </if>
+      <if test="privacy != null">
+        privacy,
+      </if>
+      <if test="likeNum != null">
+        like_num,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="likeId != null">
+        like_id,
+      </if>
+      <if test="dislikeId != null">
+        dislike_id,
+      </if>
+      <if test="awardGoldInfo != null">
+        award_gold_info,
+      </if>
+      <if test="visibleUserid != null">
+        visible_userid,
+      </if>
+      <if test="attachments != null">
+        attachments,
+      </if>
+      <if test="tags != null">
+        tags,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="authorId != null">
+        #{authorId,jdbcType=BIGINT},
+      </if>
+      <if test="privacy != null">
+        #{privacy,jdbcType=INTEGER},
+      </if>
+      <if test="likeNum != null">
+        #{likeNum,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="likeId != null">
+        #{likeId,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="dislikeId != null">
+        #{dislikeId,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="awardGoldInfo != null">
+        #{awardGoldInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="visibleUserid != null">
+        #{visibleUserid,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="attachments != null">
+        #{attachments,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tags != null">
+        #{tags,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seekerhut.model.BlogArticleWithBLOBs">
+    update blog_article
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="authorId != null">
+        author_id = #{authorId,jdbcType=BIGINT},
+      </if>
+      <if test="privacy != null">
+        privacy = #{privacy,jdbcType=INTEGER},
+      </if>
+      <if test="likeNum != null">
+        like_num = #{likeNum,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="likeId != null">
+        like_id = #{likeId,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="dislikeId != null">
+        dislike_id = #{dislikeId,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="awardGoldInfo != null">
+        award_gold_info = #{awardGoldInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="visibleUserid != null">
+        visible_userid = #{visibleUserid,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="attachments != null">
+        attachments = #{attachments,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tags != null">
+        tags = #{tags,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.seekerhut.model.BlogArticleWithBLOBs">
+    update blog_article
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      author_id = #{authorId,jdbcType=BIGINT},
+      privacy = #{privacy,jdbcType=INTEGER},
+      like_num = #{likeNum,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR},
+      title = #{title,jdbcType=LONGVARCHAR},
+      like_id = #{likeId,jdbcType=LONGVARCHAR},
+      dislike_id = #{dislikeId,jdbcType=LONGVARCHAR},
+      award_gold_info = #{awardGoldInfo,jdbcType=LONGVARCHAR},
+      visible_userid = #{visibleUserid,jdbcType=LONGVARCHAR},
+      attachments = #{attachments,jdbcType=LONGVARCHAR},
+      tags = #{tags,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seekerhut.model.BlogArticle">
+    update blog_article
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      author_id = #{authorId,jdbcType=BIGINT},
+      privacy = #{privacy,jdbcType=INTEGER},
+      like_num = #{likeNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

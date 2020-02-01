@@ -1,9 +1,13 @@
 spring:
+  application:
+    name: seekerhut
   datasource:
-    url: jdbc:mysql://10.32.5.194:3306/seekerhut_forum
+    #type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/seekerhut
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 mybatis:
-  mapper-locations: classpath:mapper/*.xml
+  mapper-locations: classpath*:com/seekerhut/mapper/*.xml
+  config-location: classpath:mybatis-config.xml

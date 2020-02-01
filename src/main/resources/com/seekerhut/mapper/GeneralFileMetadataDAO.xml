@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seekerhut.mapper.GeneralFileMetadataDAO">
+  <resultMap id="BaseResultMap" type="com.seekerhut.model.GeneralFileMetadata">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="size" jdbcType="BIGINT" property="size" />
+    <result column="sha256" jdbcType="VARCHAR" property="sha256" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_time, is_deleted, `name`, `size`, sha256, `path`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from general_file_metadata
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from general_file_metadata
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.seekerhut.model.GeneralFileMetadata" useGeneratedKeys="true">
+    insert into general_file_metadata (create_time, is_deleted, `name`, 
+      `size`, sha256, `path`)
+    values (#{createTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT}, #{name,jdbcType=VARCHAR}, 
+      #{size,jdbcType=BIGINT}, #{sha256,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.seekerhut.model.GeneralFileMetadata" useGeneratedKeys="true">
+    insert into general_file_metadata
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="size != null">
+        `size`,
+      </if>
+      <if test="sha256 != null">
+        sha256,
+      </if>
+      <if test="path != null">
+        `path`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        #{size,jdbcType=BIGINT},
+      </if>
+      <if test="sha256 != null">
+        #{sha256,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null">
+        #{path,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seekerhut.model.GeneralFileMetadata">
+    update general_file_metadata
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        `size` = #{size,jdbcType=BIGINT},
+      </if>
+      <if test="sha256 != null">
+        sha256 = #{sha256,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null">
+        `path` = #{path,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seekerhut.model.GeneralFileMetadata">
+    update general_file_metadata
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      `name` = #{name,jdbcType=VARCHAR},
+      `size` = #{size,jdbcType=BIGINT},
+      sha256 = #{sha256,jdbcType=VARCHAR},
+      `path` = #{path,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

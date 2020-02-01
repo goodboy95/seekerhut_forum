@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seekerhut.mapper.BlogReplyDAO">
+  <resultMap id="BaseResultMap" type="com.seekerhut.model.BlogReply">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+    <result column="blog_id" jdbcType="BIGINT" property="blogId" />
+    <result column="author_id" jdbcType="BIGINT" property="authorId" />
+    <result column="father_id" jdbcType="BIGINT" property="fatherId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.seekerhut.model.BlogReplyWithBLOBs">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    <result column="like_id" jdbcType="LONGVARCHAR" property="likeId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_time, is_deleted, blog_id, author_id, father_id
+  </sql>
+  <sql id="Blob_Column_List">
+    content, like_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog_reply
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from blog_reply
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.seekerhut.model.BlogReplyWithBLOBs" useGeneratedKeys="true">
+    insert into blog_reply (create_time, is_deleted, blog_id, 
+      author_id, father_id, content, 
+      like_id)
+    values (#{createTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT}, #{blogId,jdbcType=BIGINT}, 
+      #{authorId,jdbcType=BIGINT}, #{fatherId,jdbcType=BIGINT}, #{content,jdbcType=LONGVARCHAR}, 
+      #{likeId,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.seekerhut.model.BlogReplyWithBLOBs" useGeneratedKeys="true">
+    insert into blog_reply
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="blogId != null">
+        blog_id,
+      </if>
+      <if test="authorId != null">
+        author_id,
+      </if>
+      <if test="fatherId != null">
+        father_id,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="likeId != null">
+        like_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="blogId != null">
+        #{blogId,jdbcType=BIGINT},
+      </if>
+      <if test="authorId != null">
+        #{authorId,jdbcType=BIGINT},
+      </if>
+      <if test="fatherId != null">
+        #{fatherId,jdbcType=BIGINT},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="likeId != null">
+        #{likeId,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seekerhut.model.BlogReplyWithBLOBs">
+    update blog_reply
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="blogId != null">
+        blog_id = #{blogId,jdbcType=BIGINT},
+      </if>
+      <if test="authorId != null">
+        author_id = #{authorId,jdbcType=BIGINT},
+      </if>
+      <if test="fatherId != null">
+        father_id = #{fatherId,jdbcType=BIGINT},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="likeId != null">
+        like_id = #{likeId,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.seekerhut.model.BlogReplyWithBLOBs">
+    update blog_reply
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      blog_id = #{blogId,jdbcType=BIGINT},
+      author_id = #{authorId,jdbcType=BIGINT},
+      father_id = #{fatherId,jdbcType=BIGINT},
+      content = #{content,jdbcType=LONGVARCHAR},
+      like_id = #{likeId,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seekerhut.model.BlogReply">
+    update blog_reply
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      blog_id = #{blogId,jdbcType=BIGINT},
+      author_id = #{authorId,jdbcType=BIGINT},
+      father_id = #{fatherId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

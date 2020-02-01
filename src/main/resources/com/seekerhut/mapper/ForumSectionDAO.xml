@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seekerhut.mapper.ForumSectionDAO">
+  <resultMap id="BaseResultMap" type="com.seekerhut.model.ForumSection">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="creator_id" jdbcType="BIGINT" property="creatorId" />
+    <result column="view_level" jdbcType="TINYINT" property="viewLevel" />
+    <result column="post_level" jdbcType="TINYINT" property="postLevel" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.seekerhut.model.ForumSectionWithBLOBs">
+    <result column="adminid" jdbcType="LONGVARCHAR" property="adminid" />
+    <result column="admin_name" jdbcType="LONGVARCHAR" property="adminName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_time, is_deleted, `name`, creator_id, view_level, post_level, `status`
+  </sql>
+  <sql id="Blob_Column_List">
+    adminid, admin_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from forum_section
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from forum_section
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.seekerhut.model.ForumSectionWithBLOBs" useGeneratedKeys="true">
+    insert into forum_section (create_time, is_deleted, `name`, 
+      creator_id, view_level, post_level, 
+      `status`, adminid, admin_name
+      )
+    values (#{createTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT}, #{name,jdbcType=VARCHAR}, 
+      #{creatorId,jdbcType=BIGINT}, #{viewLevel,jdbcType=TINYINT}, #{postLevel,jdbcType=TINYINT}, 
+      #{status,jdbcType=TINYINT}, #{adminid,jdbcType=LONGVARCHAR}, #{adminName,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.seekerhut.model.ForumSectionWithBLOBs" useGeneratedKeys="true">
+    insert into forum_section
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="viewLevel != null">
+        view_level,
+      </if>
+      <if test="postLevel != null">
+        post_level,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="adminid != null">
+        adminid,
+      </if>
+      <if test="adminName != null">
+        admin_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="viewLevel != null">
+        #{viewLevel,jdbcType=TINYINT},
+      </if>
+      <if test="postLevel != null">
+        #{postLevel,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="adminid != null">
+        #{adminid,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="adminName != null">
+        #{adminName,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seekerhut.model.ForumSectionWithBLOBs">
+    update forum_section
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="viewLevel != null">
+        view_level = #{viewLevel,jdbcType=TINYINT},
+      </if>
+      <if test="postLevel != null">
+        post_level = #{postLevel,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="adminid != null">
+        adminid = #{adminid,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="adminName != null">
+        admin_name = #{adminName,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.seekerhut.model.ForumSectionWithBLOBs">
+    update forum_section
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      `name` = #{name,jdbcType=VARCHAR},
+      creator_id = #{creatorId,jdbcType=BIGINT},
+      view_level = #{viewLevel,jdbcType=TINYINT},
+      post_level = #{postLevel,jdbcType=TINYINT},
+      `status` = #{status,jdbcType=TINYINT},
+      adminid = #{adminid,jdbcType=LONGVARCHAR},
+      admin_name = #{adminName,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seekerhut.model.ForumSection">
+    update forum_section
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      `name` = #{name,jdbcType=VARCHAR},
+      creator_id = #{creatorId,jdbcType=BIGINT},
+      view_level = #{viewLevel,jdbcType=TINYINT},
+      post_level = #{postLevel,jdbcType=TINYINT},
+      `status` = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getList" resultType="com.seekerhut.model.ForumSection">
+    SELECT * FROM forum_section ORDER BY id LIMIT #{skip}, #{take}
+  </select>
+</mapper>

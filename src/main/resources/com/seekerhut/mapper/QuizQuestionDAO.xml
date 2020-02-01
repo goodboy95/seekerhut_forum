@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seekerhut.mapper.QuizQuestionDAO">
+  <resultMap id="BaseResultMap" type="com.seekerhut.model.QuizQuestion">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="intro" jdbcType="VARCHAR" property="intro" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.seekerhut.model.QuizQuestionWithBLOBs">
+    <result column="picpath" jdbcType="LONGVARCHAR" property="picpath" />
+    <result column="body" jdbcType="LONGVARCHAR" property="body" />
+    <result column="likes" jdbcType="LONGVARCHAR" property="likes" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_time, is_deleted, creator, `name`, intro
+  </sql>
+  <sql id="Blob_Column_List">
+    picpath, body, likes
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from quiz_question
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from quiz_question
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.seekerhut.model.QuizQuestionWithBLOBs" useGeneratedKeys="true">
+    insert into quiz_question (create_time, is_deleted, creator, 
+      `name`, intro, picpath, 
+      body, likes)
+    values (#{createTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT}, #{creator,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{intro,jdbcType=VARCHAR}, #{picpath,jdbcType=LONGVARCHAR}, 
+      #{body,jdbcType=LONGVARCHAR}, #{likes,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.seekerhut.model.QuizQuestionWithBLOBs" useGeneratedKeys="true">
+    insert into quiz_question
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="intro != null">
+        intro,
+      </if>
+      <if test="picpath != null">
+        picpath,
+      </if>
+      <if test="body != null">
+        body,
+      </if>
+      <if test="likes != null">
+        likes,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="intro != null">
+        #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="picpath != null">
+        #{picpath,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="body != null">
+        #{body,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="likes != null">
+        #{likes,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seekerhut.model.QuizQuestionWithBLOBs">
+    update quiz_question
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="intro != null">
+        intro = #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="picpath != null">
+        picpath = #{picpath,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="body != null">
+        body = #{body,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="likes != null">
+        likes = #{likes,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.seekerhut.model.QuizQuestionWithBLOBs">
+    update quiz_question
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      creator = #{creator,jdbcType=INTEGER},
+      `name` = #{name,jdbcType=VARCHAR},
+      intro = #{intro,jdbcType=VARCHAR},
+      picpath = #{picpath,jdbcType=LONGVARCHAR},
+      body = #{body,jdbcType=LONGVARCHAR},
+      likes = #{likes,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seekerhut.model.QuizQuestion">
+    update quiz_question
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      creator = #{creator,jdbcType=INTEGER},
+      `name` = #{name,jdbcType=VARCHAR},
+      intro = #{intro,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seekerhut.mapper.QuizAnswerDAO">
+  <resultMap id="BaseResultMap" type="com.seekerhut.model.QuizAnswer">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="source_ip" jdbcType="VARCHAR" property="sourceIp" />
+    <result column="quiz_id" jdbcType="INTEGER" property="quizId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.seekerhut.model.QuizAnswer">
+    <result column="body" jdbcType="LONGVARCHAR" property="body" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_time, is_deleted, creator, source_ip, quiz_id
+  </sql>
+  <sql id="Blob_Column_List">
+    body
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from quiz_answer
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from quiz_answer
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.seekerhut.model.QuizAnswer" useGeneratedKeys="true">
+    insert into quiz_answer (create_time, is_deleted, creator, 
+      source_ip, quiz_id, body
+      )
+    values (#{createTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT}, #{creator,jdbcType=INTEGER}, 
+      #{sourceIp,jdbcType=VARCHAR}, #{quizId,jdbcType=INTEGER}, #{body,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.seekerhut.model.QuizAnswer" useGeneratedKeys="true">
+    insert into quiz_answer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="sourceIp != null">
+        source_ip,
+      </if>
+      <if test="quizId != null">
+        quiz_id,
+      </if>
+      <if test="body != null">
+        body,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="sourceIp != null">
+        #{sourceIp,jdbcType=VARCHAR},
+      </if>
+      <if test="quizId != null">
+        #{quizId,jdbcType=INTEGER},
+      </if>
+      <if test="body != null">
+        #{body,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seekerhut.model.QuizAnswer">
+    update quiz_answer
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="sourceIp != null">
+        source_ip = #{sourceIp,jdbcType=VARCHAR},
+      </if>
+      <if test="quizId != null">
+        quiz_id = #{quizId,jdbcType=INTEGER},
+      </if>
+      <if test="body != null">
+        body = #{body,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.seekerhut.model.QuizAnswer">
+    update quiz_answer
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      creator = #{creator,jdbcType=INTEGER},
+      source_ip = #{sourceIp,jdbcType=VARCHAR},
+      quiz_id = #{quizId,jdbcType=INTEGER},
+      body = #{body,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seekerhut.model.QuizAnswer">
+    update quiz_answer
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      creator = #{creator,jdbcType=INTEGER},
+      source_ip = #{sourceIp,jdbcType=VARCHAR},
+      quiz_id = #{quizId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

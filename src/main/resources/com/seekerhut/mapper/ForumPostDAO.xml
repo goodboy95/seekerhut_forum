@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seekerhut.mapper.ForumPostDAO">
+  <resultMap id="BaseResultMap" type="com.seekerhut.model.ForumPost">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+    <result column="forum_id" jdbcType="INTEGER" property="forumId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="author_id" jdbcType="BIGINT" property="authorId" />
+    <result column="view_level" jdbcType="TINYINT" property="viewLevel" />
+    <result column="reply_level" jdbcType="TINYINT" property="replyLevel" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.seekerhut.model.ForumPost">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_time, is_deleted, forum_id, title, author_id, view_level, reply_level, 
+    `status`
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from forum_post
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from forum_post
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.seekerhut.model.ForumPost" useGeneratedKeys="true">
+    insert into forum_post (create_time, is_deleted, forum_id, 
+      title, author_id, view_level, 
+      reply_level, `status`, content
+      )
+    values (#{createTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT}, #{forumId,jdbcType=INTEGER},
+      #{title,jdbcType=VARCHAR}, #{authorId,jdbcType=BIGINT}, #{viewLevel,jdbcType=TINYINT},
+      #{replyLevel,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.seekerhut.model.ForumPost" useGeneratedKeys="true">
+    insert into forum_post
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="forumId != null">
+        forum_id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="authorId != null">
+        author_id,
+      </if>
+      <if test="viewLevel != null">
+        view_level,
+      </if>
+      <if test="replyLevel != null">
+        reply_level,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="forumId != null">
+        #{forumId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="authorId != null">
+        #{authorId,jdbcType=BIGINT},
+      </if>
+      <if test="viewLevel != null">
+        #{viewLevel,jdbcType=TINYINT},
+      </if>
+      <if test="replyLevel != null">
+        #{replyLevel,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seekerhut.model.ForumPost">
+    update forum_post
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="forumId != null">
+        forum_id = #{forumId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="authorId != null">
+        author_id = #{authorId,jdbcType=BIGINT},
+      </if>
+      <if test="viewLevel != null">
+        view_level = #{viewLevel,jdbcType=TINYINT},
+      </if>
+      <if test="replyLevel != null">
+        reply_level = #{replyLevel,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.seekerhut.model.ForumPost">
+    update forum_post
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      forum_id = #{forumId,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      author_id = #{authorId,jdbcType=BIGINT},
+      view_level = #{viewLevel,jdbcType=TINYINT},
+      reply_level = #{replyLevel,jdbcType=TINYINT},
+      `status` = #{status,jdbcType=TINYINT},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seekerhut.model.ForumPost">
+    update forum_post
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      forum_id = #{forumId,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      author_id = #{authorId,jdbcType=BIGINT},
+      view_level = #{viewLevel,jdbcType=TINYINT},
+      reply_level = #{replyLevel,jdbcType=TINYINT},
+      `status` = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getList" resultType="com.seekerhut.model.ForumPost">
+    select * from forum_post where forum_id=#{forumId} limit #{skip}, #{take}
+  </select>
+</mapper>

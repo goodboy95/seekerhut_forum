@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seekerhut.mapper.GeneralUserDAO">
+  <resultMap id="BaseResultMap" type="com.seekerhut.model.GeneralUser">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="pass" jdbcType="VARCHAR" property="pass" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="token" jdbcType="VARCHAR" property="token" />
+    <result column="expire_time" jdbcType="TIMESTAMP" property="expireTime" />
+    <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="last_login_ip" jdbcType="VARCHAR" property="lastLoginIp" />
+    <result column="admin_state" jdbcType="INTEGER" property="adminState" />
+    <result column="exp" jdbcType="INTEGER" property="exp" />
+    <result column="gold" jdbcType="INTEGER" property="gold" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_time, is_deleted, `name`, pass, salt, token, expire_time, last_login_time, 
+    last_login_ip, admin_state, `exp`, gold
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from general_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from general_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.seekerhut.model.GeneralUser" useGeneratedKeys="true">
+    insert into general_user (create_time, is_deleted, `name`, 
+      pass, salt, token, 
+      expire_time, last_login_time, last_login_ip, 
+      admin_state, `exp`, gold
+      )
+    values (#{createTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT}, #{name,jdbcType=VARCHAR}, 
+      #{pass,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{token,jdbcType=VARCHAR}, 
+      #{expireTime,jdbcType=TIMESTAMP}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{lastLoginIp,jdbcType=VARCHAR}, 
+      #{adminState,jdbcType=INTEGER}, #{exp,jdbcType=INTEGER}, #{gold,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.seekerhut.model.GeneralUser" useGeneratedKeys="true">
+    insert into general_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="pass != null">
+        pass,
+      </if>
+      <if test="salt != null">
+        salt,
+      </if>
+      <if test="token != null">
+        token,
+      </if>
+      <if test="expireTime != null">
+        expire_time,
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time,
+      </if>
+      <if test="lastLoginIp != null">
+        last_login_ip,
+      </if>
+      <if test="adminState != null">
+        admin_state,
+      </if>
+      <if test="exp != null">
+        `exp`,
+      </if>
+      <if test="gold != null">
+        gold,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="pass != null">
+        #{pass,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="token != null">
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="expireTime != null">
+        #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginTime != null">
+        #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginIp != null">
+        #{lastLoginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="adminState != null">
+        #{adminState,jdbcType=INTEGER},
+      </if>
+      <if test="exp != null">
+        #{exp,jdbcType=INTEGER},
+      </if>
+      <if test="gold != null">
+        #{gold,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seekerhut.model.GeneralUser">
+    update general_user
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="pass != null">
+        pass = #{pass,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="token != null">
+        token = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="expireTime != null">
+        expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginIp != null">
+        last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="adminState != null">
+        admin_state = #{adminState,jdbcType=INTEGER},
+      </if>
+      <if test="exp != null">
+        `exp` = #{exp,jdbcType=INTEGER},
+      </if>
+      <if test="gold != null">
+        gold = #{gold,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seekerhut.model.GeneralUser">
+    update general_user
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      `name` = #{name,jdbcType=VARCHAR},
+      pass = #{pass,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
+      token = #{token,jdbcType=VARCHAR},
+      expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+      admin_state = #{adminState,jdbcType=INTEGER},
+      `exp` = #{exp,jdbcType=INTEGER},
+      gold = #{gold,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

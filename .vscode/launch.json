@@ -14,7 +14,7 @@
             "type": "java",
             "name": "Debug (Launch)-ForumApplication<forum>",
             "request": "launch",
-            "mainClass": "com.seekerhut.forum.ForumApplication",
+            "mainClass": "com.seekerhut.ForumApplication",
             "projectName": "forum"
         }
     ]

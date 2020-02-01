@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seekerhut.mapper.GeneralCommondataDAO">
+  <resultMap id="BaseResultMap" type="com.seekerhut.model.GeneralCommondata">
+    <id column="common_config_id" jdbcType="BIGINT" property="commonConfigId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.seekerhut.model.GeneralCommondata">
+    <result column="item" jdbcType="LONGVARCHAR" property="item" />
+    <result column="value" jdbcType="LONGVARCHAR" property="value" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    common_config_id
+  </sql>
+  <sql id="Blob_Column_List">
+    item, `value`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from general_commondata
+    where common_config_id = #{commonConfigId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from general_commondata
+    where common_config_id = #{commonConfigId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.seekerhut.model.GeneralCommondata">
+    insert into general_commondata (common_config_id, item, `value`
+      )
+    values (#{commonConfigId,jdbcType=BIGINT}, #{item,jdbcType=LONGVARCHAR}, #{value,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.seekerhut.model.GeneralCommondata">
+    insert into general_commondata
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="commonConfigId != null">
+        common_config_id,
+      </if>
+      <if test="item != null">
+        item,
+      </if>
+      <if test="value != null">
+        `value`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="commonConfigId != null">
+        #{commonConfigId,jdbcType=BIGINT},
+      </if>
+      <if test="item != null">
+        #{item,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="value != null">
+        #{value,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seekerhut.model.GeneralCommondata">
+    update general_commondata
+    <set>
+      <if test="item != null">
+        item = #{item,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="value != null">
+        `value` = #{value,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where common_config_id = #{commonConfigId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.seekerhut.model.GeneralCommondata">
+    update general_commondata
+    set item = #{item,jdbcType=LONGVARCHAR},
+      `value` = #{value,jdbcType=LONGVARCHAR}
+    where common_config_id = #{commonConfigId,jdbcType=BIGINT}
+  </update>
+</mapper>
