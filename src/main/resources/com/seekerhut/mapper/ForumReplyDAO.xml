@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.seekerhut.model.ForumReply">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
     <result column="post_id" jdbcType="BIGINT" property="postId" />
     <result column="author_id" jdbcType="BIGINT" property="authorId" />
     <result column="view_level" jdbcType="TINYINT" property="viewLevel" />
@@ -34,7 +34,7 @@
     insert into forum_reply (create_time, is_deleted, post_id, 
       author_id, view_level, content
       )
-    values (#{createTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=TINYINT}, #{postId,jdbcType=BIGINT}, 
+    values (#{createTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT}, #{postId,jdbcType=BIGINT}, 
       #{authorId,jdbcType=BIGINT}, #{viewLevel,jdbcType=TINYINT}, #{content,jdbcType=LONGVARCHAR}
       )
   </insert>
@@ -65,7 +65,7 @@
         #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="isDeleted != null">
-        #{isDeleted,jdbcType=TINYINT},
+        #{isDeleted,jdbcType=BIT},
       </if>
       <if test="postId != null">
         #{postId,jdbcType=BIGINT},
@@ -88,7 +88,7 @@
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="isDeleted != null">
-        is_deleted = #{isDeleted,jdbcType=TINYINT},
+        is_deleted = #{isDeleted,jdbcType=BIT},
       </if>
       <if test="postId != null">
         post_id = #{postId,jdbcType=BIGINT},
@@ -108,7 +108,7 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.seekerhut.model.ForumReply">
     update forum_reply
     set create_time = #{createTime,jdbcType=TIMESTAMP},
-      is_deleted = #{isDeleted,jdbcType=TINYINT},
+      is_deleted = #{isDeleted,jdbcType=BIT},
       post_id = #{postId,jdbcType=BIGINT},
       author_id = #{authorId,jdbcType=BIGINT},
       view_level = #{viewLevel,jdbcType=TINYINT},
@@ -118,7 +118,7 @@
   <update id="updateByPrimaryKey" parameterType="com.seekerhut.model.ForumReply">
     update forum_reply
     set create_time = #{createTime,jdbcType=TIMESTAMP},
-      is_deleted = #{isDeleted,jdbcType=TINYINT},
+      is_deleted = #{isDeleted,jdbcType=BIT},
       post_id = #{postId,jdbcType=BIGINT},
       author_id = #{authorId,jdbcType=BIGINT},
       view_level = #{viewLevel,jdbcType=TINYINT}

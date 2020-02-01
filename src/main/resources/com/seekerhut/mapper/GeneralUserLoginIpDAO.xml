@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.seekerhut.mapper.GeneralUserLoginIpDAO">
   <resultMap id="BaseResultMap" type="com.seekerhut.model.GeneralUserLoginIp">
-    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="id" jdbcType="BIGINT" property="id" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="login_ip" jdbcType="VARCHAR" property="loginIp" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -11,15 +11,15 @@
   <sql id="Base_Column_List">
     id, user_id, login_ip, create_time, is_deleted
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from general_user_login_ip
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from general_user_login_ip
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.seekerhut.model.GeneralUserLoginIp" useGeneratedKeys="true">
     insert into general_user_login_ip (user_id, login_ip, create_time, 
@@ -74,7 +74,7 @@
         is_deleted = #{isDeleted,jdbcType=BIT},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.seekerhut.model.GeneralUserLoginIp">
     update general_user_login_ip
@@ -82,6 +82,6 @@
       login_ip = #{loginIp,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       is_deleted = #{isDeleted,jdbcType=BIT}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

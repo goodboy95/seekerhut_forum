@@ -39,8 +39,8 @@
       title, author_id, view_level, 
       reply_level, `status`, content
       )
-    values (#{createTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT}, #{forumId,jdbcType=INTEGER},
-      #{title,jdbcType=VARCHAR}, #{authorId,jdbcType=BIGINT}, #{viewLevel,jdbcType=TINYINT},
+    values (#{createTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT}, #{forumId,jdbcType=INTEGER}, 
+      #{title,jdbcType=VARCHAR}, #{authorId,jdbcType=BIGINT}, #{viewLevel,jdbcType=TINYINT}, 
       #{replyLevel,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, #{content,jdbcType=LONGVARCHAR}
       )
   </insert>

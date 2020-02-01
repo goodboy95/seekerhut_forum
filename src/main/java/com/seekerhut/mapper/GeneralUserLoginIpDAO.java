@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
  * GeneralUserLoginIpDAO继承基类
  */
 @Repository
-public interface GeneralUserLoginIpDAO extends MyBatisBaseDao<GeneralUserLoginIp, Integer> {
+public interface GeneralUserLoginIpDAO extends MyBatisBaseDao<GeneralUserLoginIp, Long> {
 }
