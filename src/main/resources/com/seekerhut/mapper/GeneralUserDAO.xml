@@ -6,8 +6,8 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="pass" jdbcType="VARCHAR" property="pass" />
-    <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="passhash" jdbcType="CHAR" property="passhash" />
+    <result column="salt" jdbcType="CHAR" property="salt" />
     <result column="token" jdbcType="VARCHAR" property="token" />
     <result column="expire_time" jdbcType="TIMESTAMP" property="expireTime" />
     <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
@@ -17,7 +17,7 @@
     <result column="gold" jdbcType="INTEGER" property="gold" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, create_time, is_deleted, `name`, pass, salt, token, expire_time, last_login_time, 
+    id, create_time, is_deleted, `name`, passhash, salt, token, expire_time, last_login_time, 
     last_login_ip, admin_state, `exp`, gold
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -32,15 +32,13 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.seekerhut.model.GeneralUser" useGeneratedKeys="true">
     insert into general_user (create_time, is_deleted, `name`, 
-      pass, salt, token, 
-      expire_time, last_login_time, last_login_ip, 
-      admin_state, `exp`, gold
-      )
+      passhash, salt, token, expire_time, 
+      last_login_time, last_login_ip, admin_state, 
+      `exp`, gold)
     values (#{createTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT}, #{name,jdbcType=VARCHAR}, 
-      #{pass,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{token,jdbcType=VARCHAR}, 
-      #{expireTime,jdbcType=TIMESTAMP}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{lastLoginIp,jdbcType=VARCHAR}, 
-      #{adminState,jdbcType=INTEGER}, #{exp,jdbcType=INTEGER}, #{gold,jdbcType=INTEGER}
-      )
+      #{passhash,jdbcType=CHAR}, #{salt,jdbcType=CHAR}, #{token,jdbcType=VARCHAR}, #{expireTime,jdbcType=TIMESTAMP}, 
+      #{lastLoginTime,jdbcType=TIMESTAMP}, #{lastLoginIp,jdbcType=VARCHAR}, #{adminState,jdbcType=INTEGER}, 
+      #{exp,jdbcType=INTEGER}, #{gold,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.seekerhut.model.GeneralUser" useGeneratedKeys="true">
     insert into general_user
@@ -54,8 +52,8 @@
       <if test="name != null">
         `name`,
       </if>
-      <if test="pass != null">
-        pass,
+      <if test="passhash != null">
+        passhash,
       </if>
       <if test="salt != null">
         salt,
@@ -92,11 +90,11 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="pass != null">
-        #{pass,jdbcType=VARCHAR},
+      <if test="passhash != null">
+        #{passhash,jdbcType=CHAR},
       </if>
       <if test="salt != null">
-        #{salt,jdbcType=VARCHAR},
+        #{salt,jdbcType=CHAR},
       </if>
       <if test="token != null">
         #{token,jdbcType=VARCHAR},
@@ -133,11 +131,11 @@
       <if test="name != null">
         `name` = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="pass != null">
-        pass = #{pass,jdbcType=VARCHAR},
+      <if test="passhash != null">
+        passhash = #{passhash,jdbcType=CHAR},
       </if>
       <if test="salt != null">
-        salt = #{salt,jdbcType=VARCHAR},
+        salt = #{salt,jdbcType=CHAR},
       </if>
       <if test="token != null">
         token = #{token,jdbcType=VARCHAR},
@@ -168,8 +166,8 @@
     set create_time = #{createTime,jdbcType=TIMESTAMP},
       is_deleted = #{isDeleted,jdbcType=BIT},
       `name` = #{name,jdbcType=VARCHAR},
-      pass = #{pass,jdbcType=VARCHAR},
-      salt = #{salt,jdbcType=VARCHAR},
+      passhash = #{passhash,jdbcType=CHAR},
+      salt = #{salt,jdbcType=CHAR},
       token = #{token,jdbcType=VARCHAR},
       expire_time = #{expireTime,jdbcType=TIMESTAMP},
       last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
@@ -179,4 +177,7 @@
       gold = #{gold,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="getUserByName" resultType="com.seekerhut.model.GeneralUser">
+    select * from general_user where name = #{name}
+  </select>
 </mapper>

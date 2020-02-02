@@ -10,7 +10,7 @@ import java.util.Date;
 public class GeneralUser extends ModelBase implements Serializable {
     private String name;
 
-    private String pass;
+    private String passhash;
 
     private String salt;
 
@@ -38,12 +38,12 @@ public class GeneralUser extends ModelBase implements Serializable {
         this.name = name;
     }
 
-    public String getPass() {
-        return pass;
+    public String getPasshash() {
+        return passhash;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setPasshash(String passhash) {
+        this.passhash = passhash;
     }
 
     public String getSalt() {
@@ -126,7 +126,7 @@ public class GeneralUser extends ModelBase implements Serializable {
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getIsDeleted() == null ? other.getIsDeleted() == null : this.getIsDeleted().equals(other.getIsDeleted()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
-            && (this.getPass() == null ? other.getPass() == null : this.getPass().equals(other.getPass()))
+            && (this.getPasshash() == null ? other.getPasshash() == null : this.getPasshash().equals(other.getPasshash()))
             && (this.getSalt() == null ? other.getSalt() == null : this.getSalt().equals(other.getSalt()))
             && (this.getToken() == null ? other.getToken() == null : this.getToken().equals(other.getToken()))
             && (this.getExpireTime() == null ? other.getExpireTime() == null : this.getExpireTime().equals(other.getExpireTime()))
@@ -145,7 +145,7 @@ public class GeneralUser extends ModelBase implements Serializable {
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getIsDeleted() == null) ? 0 : getIsDeleted().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
-        result = prime * result + ((getPass() == null) ? 0 : getPass().hashCode());
+        result = prime * result + ((getPasshash() == null) ? 0 : getPasshash().hashCode());
         result = prime * result + ((getSalt() == null) ? 0 : getSalt().hashCode());
         result = prime * result + ((getToken() == null) ? 0 : getToken().hashCode());
         result = prime * result + ((getExpireTime() == null) ? 0 : getExpireTime().hashCode());
@@ -167,7 +167,7 @@ public class GeneralUser extends ModelBase implements Serializable {
         sb.append(", createTime=").append(createTime);
         sb.append(", isDeleted=").append(isDeleted);
         sb.append(", name=").append(name);
-        sb.append(", pass=").append(pass);
+        sb.append(", passhash=").append(passhash);
         sb.append(", salt=").append(salt);
         sb.append(", token=").append(token);
         sb.append(", expireTime=").append(expireTime);

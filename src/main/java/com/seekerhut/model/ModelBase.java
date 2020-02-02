@@ -8,11 +8,6 @@ public abstract class ModelBase implements Serializable {
     protected Date createTime;
     protected Boolean isDeleted;
 
-    public ModelBase() {
-        createTime = new Date();
-        isDeleted = false;
-    }
-
     public Long getId() {
         return id;
     }

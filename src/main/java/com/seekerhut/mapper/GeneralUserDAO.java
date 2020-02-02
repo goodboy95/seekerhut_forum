@@ -1,6 +1,7 @@
 package com.seekerhut.mapper;
 
 import com.seekerhut.model.GeneralUser;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -8,4 +9,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface GeneralUserDAO extends MyBatisBaseDao<GeneralUser, Long> {
+    GeneralUser getUserByName(@Param("name")String name);
 }

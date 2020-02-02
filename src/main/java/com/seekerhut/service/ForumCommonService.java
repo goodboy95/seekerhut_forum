@@ -9,6 +9,7 @@ import com.seekerhut.model.ForumSection;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @Service("forumCommonService")
@@ -24,6 +25,8 @@ public class ForumCommonService {
         if (section.getId() != null) {
             sectionMapper.updateByPrimaryKey(section);
         } else {
+            section.setIsDeleted(false);
+            section.setCreateTime(new Date());
             section.setViewLevel((byte)0);
             section.setPostLevel((byte)0);
             section.setStatus((byte)0);
@@ -44,6 +47,8 @@ public class ForumCommonService {
         if (post.getId() != null) {
             postMapper.updateByPrimaryKeySelective(post);
         } else {
+            post.setIsDeleted(false);
+            post.setCreateTime(new Date());
             post.setViewLevel((byte)0);
             post.setReplyLevel((byte)0);
             post.setStatus((byte)0);
@@ -60,6 +65,8 @@ public class ForumCommonService {
         if (reply.getId() != null) {
             replyMapper.updateByPrimaryKey(reply);
         } else {
+            reply.setIsDeleted(false);
+            reply.setCreateTime(new Date());
             reply.setViewLevel((byte)0);
             replyMapper.insert(reply);
         }
