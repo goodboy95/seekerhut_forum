@@ -14,3 +14,4 @@ import java.util.List;
 public interface ForumReplyDAO extends MyBatisBaseDao<ForumReply, Long> {
     List<ForumReply> getList(@Param("postId") Long postId, @Param("skip") int skip, @Param("take") int take);
 }
+

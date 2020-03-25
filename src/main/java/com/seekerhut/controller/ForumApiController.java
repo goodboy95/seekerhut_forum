@@ -34,6 +34,10 @@ public class ForumApiController extends BaseController {
         return Success(forumList);
     }
 
+    public String prolongString(String src) {
+        return src + " ";
+    }
+
     @RequestMapping(value = "/postList", method = RequestMethod.GET)
     @ApiOperation(value = "", httpMethod = "GET", notes = "")
     @ApiImplicitParams({

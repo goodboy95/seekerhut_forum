@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.annotation.Resource;
+import java.lang.ref.SoftReference;
 import java.util.Date;
 
 @Service("AuthService")
