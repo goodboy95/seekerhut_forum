@@ -1,110 +1,92 @@
 package com.seekerhut.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.seekerhut.utils.JedisHelper;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.stream.Collectors;
+
+import javax.annotation.Resource;
+
+import com.alibaba.fastjson.JSON;
+import com.seekerhut.service.ForumCommonService;
+import com.seekerhut.utils.CommonFunctions;
+import com.seekerhut.utils.EnumAndConstData.HTTPMethod;
+import com.seekerhut.utils.custombean.datagenerator.DataGenConfig;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.HTTP;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.*;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 
 @Controller
 @RequestMapping(value = "/api/test")
 public class TestController extends BaseController {
+    @Resource
+    private ForumCommonService forumCommonService;
+
     @RequestMapping(value = "base_test", method = RequestMethod.GET)
-    public @ResponseBody String baseTest(@RequestParam String begin, @RequestParam String end, @RequestParam String wordStr) {
-        List<String> words = Arrays.asList(wordStr.split(","));
-        int res = ladderLength(begin, end, words);
-        var x = new HashMap<Character, Integer>();
-        x.
-        return Success(res);
+    public @ResponseBody String baseTest() {
+        return Success("");
     }
 
-    private int ladderLength(String beginWord, String endWord, List<String> wordList) {
-        // create graph
-        int wordNum = wordList.size();
-        int begin = -1, end = -1;
-        StringBuilder sb = new StringBuilder("dedede");
-        sb.
-        ArrayList<ArrayList<Integer>> wordGraph = new ArrayList<ArrayList<Integer>>();
-        for (int i = 0; i < wordNum; i++) {
-            wordGraph.add(new ArrayList<Integer>());
-        }
-        for (int i = 0; i < wordNum; i++) {
-            String curWord = wordList.get(i);
-            if (beginWord.equals(curWord)) {
-                begin = i;
-            }
-            if (endWord.equals(curWord)) {
-                end = i;
-            }
-            for (int j = 0; j < wordNum; j++) {
-                String targetWord = wordList.get(j);
-                if (j != i && isNextTo(curWord, targetWord)) {
-                    wordGraph.get(i).add(j);
-                    wordGraph.get(j).add(i);
-                }
-            }
-        }
-        System.out.println(JSONObject.toJSONString(wordGraph));
-        // solve by BFS
-        if (begin < 0 || end < 0) {
-            return 0;
-        }
-        Queue<AntClass> ants = new LinkedList<AntClass>();
-        ants.add(new AntClass(begin));
-        while (ants.size() > 0) {
-            AntClass curAnt = ants.poll();
-            if (curAnt.curPos == end) {
-                return curAnt.visited.size();
-            }
-            ArrayList<Integer> nextUps = wordGraph.get(curAnt.curPos);
-            for (int i : nextUps) {
-                AntClass newAnt = new AntClass(i, curAnt);
-                if (newAnt.isValid) {
-                    ants.offer(newAnt);
-                }
-            }
-        }
-        return 0;
-    }
-
-    private Boolean isNextTo(String s1, String s2) {
-        Boolean hasDiff = false;
-        for (int i = 0; i < s1.length(); i++) {
-            if (s1.charAt(i) == s2.charAt(i)) {
-                if (hasDiff) {
-                    return false;
+    @RequestMapping(value = "api_call_test", method = RequestMethod.POST)
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "generatorConfig", value = "", paramType = "form", dataType = "String")
+    })
+    public @ResponseBody String apiCallTest(String generatorConfig) throws IOException {
+        CloseableHttpClient hc = HttpClients.createDefault();
+        int currentPercent = 0;
+        DataGenConfig config = JSON.parseObject(generatorConfig, DataGenConfig.class);
+        HTTPMethod method = config.getMethod();
+        String url = config.getUrl();
+        int cycles = config.getTimes();
+        int interval = config.getInterval();
+        var fieldsConfig = config.getFieldData();
+        try {
+            for (int i = 1; i <= cycles; i++) {
+                var generatedParams = CommonFunctions.generateQueryDataByConfig(fieldsConfig);
+                var finalParams = generatedParams.entrySet().stream()
+                    .map(e -> (NameValuePair)new BasicNameValuePair(e.getKey(), e.getValue()))
+                    .collect(Collectors.toList());
+                if (method == HTTPMethod.get) {
+                    URIBuilder builder = new URIBuilder(url);
+                    builder.addParameters(finalParams);
+                    HttpGet getObj = new HttpGet(builder.build());
+                    hc.execute(getObj).close();
+                } else if (method == HTTPMethod.post) {
+                    HttpPost postObj = new HttpPost(url);
+                    postObj.setEntity(new UrlEncodedFormEntity(finalParams, StandardCharsets.UTF_8));
+                    hc.execute(postObj).close();
                 } else {
-                    hasDiff = true;
+                    //TODO: add other query methods
+                }
+                Thread.sleep(interval);
+                if (i * 100 / cycles > currentPercent) {
+                    currentPercent = i * 100 / cycles;
+                    System.out.println(String.format("Executed %d/%d iterations (%d%%)", i, cycles, currentPercent));
                 }
             }
+            return Success("");
+        } catch (Exception e) {
+            return Fail(-1, e.getMessage());
+        } finally {
+            hc.close();
         }
-        return true;
-    }
-
-    class AntClass {
-        public int curPos;
-        public HashSet<Integer> visited;
-        public Boolean isValid;
-        public AntClass(int pos) {
-            curPos = pos;
-            visited = new HashSet<Integer>();
-            visited.add(pos);
-            isValid = true;
-        }
-        public AntClass(int pos, AntClass oldAnt) {
-            curPos = pos;
-            visited = oldAnt.visited;
-            if (visited.contains(pos)) {
-                isValid = false;
-            } else {
-                visited.add(pos);
-                isValid = true;
-            }
-
-        }
+        
+        
     }
 }

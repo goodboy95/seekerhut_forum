@@ -19,3 +19,6 @@ redis:
   poolsize: 100
   database: 1
   prefix: forum
+
+server:
+  port: 8081

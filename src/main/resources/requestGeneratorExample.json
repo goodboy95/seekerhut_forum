@@ -1,0 +1,16 @@
+{
+    "method": "get",
+    "url": "http://localforum.seekerhut.com/",
+    "times": 10,
+    "interval": 100,
+    "fieldData": {
+        "param1": {
+            "stringFormatBase": "{'id': %s, 'name': '%s'}",
+            "elementLength": [6, 10],
+            "elementCharRanges": [
+                ["number"],
+                ["wordchar", "chinese"]
+            ]
+        }
+    }
+}

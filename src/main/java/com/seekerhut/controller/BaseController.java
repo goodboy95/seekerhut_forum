@@ -4,11 +4,7 @@ import com.alibaba.fastjson.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.Console;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.LinkedList;
 
 public class BaseController {
     public <T extends Serializable>T JObjectParse(JSONObject jobj) {
@@ -24,7 +20,7 @@ public class BaseController {
             jobj.put("Message", msg);
             if (dataStr.substring(0, 1).equals("[")) jobj.put("Data", new JSONArray(dataStr));
             else if (dataStr.substring(0, 1).equals("{")) jobj.put("Data", new JSONObject(dataStr));
-            else jobj.put("Data", new JSONObject());
+            else jobj.put("Data", data);
             return jobj.toString();
         }
         catch (Exception e) {

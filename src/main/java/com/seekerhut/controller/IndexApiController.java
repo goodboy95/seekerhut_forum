@@ -1,10 +1,5 @@
 package com.seekerhut.controller;
 
-import com.alibaba.fastjson.JSON;
-
-import com.seekerhut.model.ForumPost;
-import com.seekerhut.model.ForumReply;
-import com.seekerhut.model.ForumSection;
 import com.seekerhut.service.AuthService;
 import com.seekerhut.service.ForumCommonService;
 import com.seekerhut.utils.CommonFunctions;
@@ -12,10 +7,8 @@ import com.seekerhut.utils.JedisHelper;
 import com.seekerhut.utils.RequestResponseParser;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,10 +17,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.http.HttpResponse;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.*;
 
 @Controller
 @RequestMapping("/api/forum")
@@ -79,8 +70,6 @@ public class IndexApiController extends BaseController {
                 response.addCookie(new Cookie("username", username));
                 response.addCookie(new Cookie("token", finalToken));
                 response.sendRedirect("/index.html");
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                LocalDateTime dt = LocalDateTime.now().plusMonths(2);
                 return Success("");
             }
         }

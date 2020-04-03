@@ -10,7 +10,6 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -78,9 +77,9 @@ public class ForumApiController extends BaseController {
 
     @RequestMapping(value = "/post", method = RequestMethod.POST)
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "postJson", value = "", paramType = "body", dataType = "String"),
+            @ApiImplicitParam(name = "postJson", value = "", paramType = "form", dataType = "String"),
     })
-    public @ResponseBody String SavePost(@RequestBody String postJson) {
+    public @ResponseBody String SavePost(String postJson) {
         try {
             var postObj = JSON.parseObject(postJson, ForumPost.class);
             forumCommonService.savePost(postObj);
